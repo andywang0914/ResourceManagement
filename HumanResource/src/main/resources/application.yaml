@@ -1,0 +1,45 @@
+
+spring:
+  datasource:
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    minIdle: 5
+    useGlobalDataSourceStat: true
+    validationQuery: SELECT 1 FROM DUAL
+    initialSize: 5
+    maxWait: 60000
+    filters: stat,wall,log4j
+    poolPreparedStatements: true
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://{$url}:3306/{$database}
+    maxPoolPreparedStatementPerConnectionSize: 20
+    password: {db_password}
+    testOnBorrow: false
+    testWhileIdle: true
+    minEvictableIdleTimeMillis: 300000
+    timeBetweenEvictionRunsMillis: 60000
+    testOnReturn: false
+    driverClassName: com.mysql.jdbc.Driver
+    maxActive: 20
+    username: {db_username}
+  session:
+    store-type: none
+  resources:
+    static-locations: classpath:/resources/,classpath:/static/
+  jpa:
+    database: MYSQL
+    show-sql: false
+    generate-ddl: true
+    hibernate:
+      naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+server:
+  session-timeout: 3600
+  port: 8080
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:1111/eureka/
